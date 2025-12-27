@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Github, Linkedin, Mail, Twitter, Instagram } from "lucide-react"
+import { useToast } from "@/components/ui/use-toast"
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,8 @@ export function ContactSection() {
     message: "",
   })
   const [isVisible, setIsVisible] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast()
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -39,8 +42,60 @@ export function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log("Form submitted:", formData)
+
+    if (isSubmitting) return
+
+    const { name, email, subject, message } = formData
+
+    // Basic validation
+    if (!name || !email || !subject || !message) {
+      toast({
+        title: "Missing information",
+        description: "Please fill in all the fields before sending.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    // Simple email format check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      toast({
+        title: "Invalid email address",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      const mailSubject = encodeURIComponent(subject)
+      const mailBody = encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+      )
+
+      // Small timeout so loading state + toast feel natural
+      setTimeout(() => {
+        window.location.href = `mailto:prabhatgupta428@gmail.com?subject=${mailSubject}&body=${mailBody}`
+
+        toast({
+          title: "Opening email client",
+          description: "Your message is ready to be sent.",
+        })
+
+        setIsSubmitting(false)
+      }, 1000)
+    } catch (error) {
+      setIsSubmitting(false)
+
+      toast({
+        title: "Something went wrong",
+        description: "Unable to open your email client. Please try again.",
+        variant: "destructive",
+      })
+    }
   }
 
   return (
@@ -187,10 +242,11 @@ export function ContactSection() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/50"
+                  disabled={isSubmitting}
+                  className="w-full hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/50 disabled:opacity-70 disabled:cursor-not-allowed"
                   size="lg"
                 >
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </div>
