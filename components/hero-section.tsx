@@ -73,10 +73,17 @@ export function HeroSection() {
             >
               Get In Touch
             </a>
-            <button className="px-8 py-3 border border-cyan-500/50 rounded-full font-medium hover:bg-cyan-500/10 hover:border-cyan-400 hover:scale-110 transition-all duration-300 flex items-center gap-2">
-              <Download className="h-4 w-4" />
-              Download Resume
-            </button>
+            <a
+              href="/resume/Prabhat_Gupta_Resume.pdf"
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="px-8 py-3 border border-cyan-500/50 rounded-full font-medium hover:bg-cyan-500/10 hover:border-cyan-400 hover:scale-110 transition-all duration-300 flex items-center gap-2">
+                <Download className="h-4 w-4" />
+                Download Resume
+              </button>
+            </a>
           </div>
         </div>
       </div>
