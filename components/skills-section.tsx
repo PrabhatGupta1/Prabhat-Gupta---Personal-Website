@@ -2,22 +2,79 @@
 
 import { useEffect, useRef, useState } from "react"
 import { Badge } from "@/components/ui/badge"
-import { Code2, Layers, Wrench } from "lucide-react"
+import { Cloud, Code2, Layers, Network, Sparkles, Wrench } from "lucide-react"
 
 const skills = {
   "Backend Development": {
     icon: Layers,
-    items: ["Node.js", "Express.js", "PostgreSQL", "Prisma", "Strapi CMS", "GCP"],
+    items: [
+      "Node.js",
+      "Express.js",
+      "REST API Design",
+      "PostgreSQL",
+      "SQL",
+      "Prisma ORM",
+      "Firestore (NoSQL)",
+      "Strapi CMS",
+    ],
   },
+
   "Frontend Development": {
     icon: Code2,
-    items: ["React", "Next.js", "React Native", "Tailwind CSS", "Firebase", "Expo"],
+    items: [
+      "React.js",
+      "Next.js",
+      "React Native",
+      "Tailwind CSS",
+      "Firebase",
+      "Expo",
+    ],
   },
-  "Problem Solving": {
+
+  "Programming & Problem Solving": {
     icon: Wrench,
-    items: ["Core Java", "C#", "JavaScript", "OOPs", "Data Structures", "Algorithms"],
+    items: [
+      "JavaScript",
+      "TypeScript",
+      "Core Java",
+      "C#",
+      "OOPs",
+      "Data Structures",
+      "Algorithms",
+    ],
   },
-}
+
+  "System Design & Architecture": {
+    icon: Network,
+    items: [
+      "High-Level Design",
+      "Low-Level Design",
+      "Database Design",
+      "Scalability & Performance",
+      "API Design & Versioning",
+    ],
+  },
+
+  "Automation & AI": {
+    icon: Sparkles,
+    items: [
+      "LLM Integrations",
+      "Document Data Extraction",
+      "Workflow Automation (n8n)",
+    ],
+  },
+
+  "Cloud & DevOps": {
+    icon: Cloud,
+    items: [
+      "GCP",
+      "Cloud Run",
+      "Virtual Machines",
+      "Docker & Containers",
+      "CI/CD",
+    ],
+  },
+};
 
 export function SkillsSection() {
   const [isVisible, setIsVisible] = useState(false)
